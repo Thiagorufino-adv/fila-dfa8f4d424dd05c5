@@ -75,7 +75,7 @@
   .doc-body{padding:14px 52px 26px;font-family:Arial,Helvetica,sans-serif;font-size:12pt;
     color:#000;line-height:1.5;text-align:justify;}
   /* procuração compacta: texto menor e espaços justos para caber em UMA página */
-  .compacta .doc-body{font-size:9.8pt;line-height:1.25;}
+  .compacta .doc-body{font-size:9.5pt;line-height:1.24;}
   .compacta .doc-body h2{margin:2px 0 6px;}
   .compacta .doc-body p{margin-bottom:5px;}
   .compacta .doc-body .fecho .data{margin-top:8px;}
@@ -119,7 +119,7 @@
     .lh-bottom{padding-top:14px;}
     .lh-bottom img{width:100%;display:block;}
     .doc-body{padding:0;font-size:11pt;}
-    .compacta .doc-body{font-size:9.8pt;line-height:1.25;}
+    .compacta .doc-body{font-size:9.5pt;line-height:1.24;}
   }
 </style>
 </head>
@@ -127,7 +127,7 @@
 
 <div class="panel">
   <h1>Gerador de Contratos &amp; Procurações</h1>
-  <div class="sub">Rufino &amp; Della Giustina Advocacia · valores conforme o Hub de Propostas de Honorários · os dados ficam somente neste computador · <b>v4.11.0 (13/10/2026)</b> — se esta versão não aparecer, aperte Ctrl+F5</div>
+  <div class="sub">Rufino &amp; Della Giustina Advocacia · valores conforme o Hub de Propostas de Honorários · os dados ficam somente neste computador · <b>v4.11.2 (14/10/2026)</b> — se esta versão não aparecer, aperte Ctrl+F5</div>
 
   <div class="box">
     <div class="bt">1 · Tipo de contratação</div>
@@ -605,6 +605,18 @@ function contratoFixo(d){
   ${blocoAssinaturaContrato(d)}</div>`;
 }
 
+/* ---------- poderes específicos para REQUERER o benefício de cada tipo (só os previdenciários) ---------- */
+const PODER_BENEFICIO={
+  aposentadoria:"aposentadoria por idade (urbana ou rural), por tempo de contribuição (inclusive pelas regras de transição da EC nº 103/2019), especial ou da pessoa com deficiência (PcD), e/ou pensão por morte, bem como o reconhecimento e a averbação de tempos de contribuição (atividade especial, rural, serviço militar e demais períodos)",
+  incapacidade:"auxílio por incapacidade temporária (inclusive pedidos de prorrogação e de reconsideração), aposentadoria por incapacidade permanente e/ou adicional de 25% (art. 45 da Lei nº 8.213/91)",
+  acidente:"auxílio-acidente",
+  bpc:"benefício assistencial de prestação continuada (BPC/LOAS) à pessoa com deficiência ou ao idoso",
+  maternidade:"salário-maternidade (urbana, rural, segurada especial ou adoção)",
+  reclusao:"auxílio-reclusão",
+  pensao_morte:"pensão por morte",
+  revisao:"a revisão do benefício previdenciário já concedido, inclusive o reconhecimento de tempo não computado e a reafirmação da DER"
+};
+
 /* ---------- PROCURAÇÃO ---------- */
 function procuracao(d){
   const t=d.t, e=ESCRITORIO;
@@ -614,7 +626,7 @@ function procuracao(d){
   <p style="margin-top:12px"><span class="cl">DECLARAÇÃO DE HIPOSSUFICIÊNCIA:</span> o(a) Outorgante acima qualificado(a)${d.rep?`, ${d.repCondicao!=="representado"?"assistido(a)":"representado(a)"} por seu(sua) ${d.repCondicao!=="representado"?"assistente":"representante"} legal que também subscreve este instrumento,`:""} DECLARA, sob as penas da lei (Lei nº 7.115/83 e art. 299 do Código Penal), para fins de prova, que não possui condições de arcar com as custas do processo sem prejuízo do próprio sustento ou de sua família, assumindo inteira responsabilidade civil e criminal pela presente declaração.</p>` : "";
   return `
   <h2>Procuração</h2>
-  <p>Pelo presente instrumento particular de <strong>PROCURAÇÃO</strong>, ${qualificacao(d,true)}, nomeia e constitui como seus procuradores ${socios}, e a Sociedade de Advogados <strong>${e.nome}</strong>, inscrita na Ordem dos Advogados do Brasil, Seção do Estado de Santa Catarina, sob o nº ${e.oabSociedade}, CNPJ nº ${e.cnpj}, com escritório na ${e.endereco}, por eles representada, a quem confere os poderes da cláusula <i>ad judicia et extra</i>, para exercê-los no foro em geral e perante quaisquer órgãos da administração pública direta e indireta, em especial o INSS, outorgando-lhes ainda <strong>PODERES ESPECIAIS</strong>, na forma do art. 105 do Código de Processo Civil, para receber citação, confessar, reconhecer a procedência do pedido, acordar e transigir, desistir, renunciar ao direito sobre o qual se funda a ação, receber e dar quitação, levantar valores por alvará ou requisição de pagamento, firmar compromisso e assinar declaração de hipossuficiência econômica, prestar caução, passar recibos e substabelecer com ou sem reserva de poderes, e declarar e requerer isenção de imposto de renda. Perante o INSS, especificamente, ficam ainda autorizados a formular, instruir, desistir e acompanhar requerimentos administrativos de qualquer natureza — inclusive pelo Meu INSS, pelo GERID e por demais canais eletrônicos, digitais ou presenciais —, cadastrar e utilizar senha de acesso, cumprir exigências e juntar documentos (inclusive prontuários e exames médicos), agendar, remarcar e cancelar perícias médicas e avaliações sociais, obter cópia integral de processo administrativo, extratos, CNIS, cartas de concessão e memórias de cálculo, interpor recurso administrativo perante a Junta de Recursos da Previdência Social (JRPS) e o Conselho de Recursos do Seguro Social (CRSS), e indicar ou alterar dados bancários exclusivamente para fins de recebimento do benefício requerido.</p>
+  <p>Pelo presente instrumento particular de <strong>PROCURAÇÃO</strong>, ${qualificacao(d,true)}, nomeia e constitui como seus procuradores ${socios}, e a Sociedade de Advogados <strong>${e.nome}</strong>, inscrita na Ordem dos Advogados do Brasil, Seção do Estado de Santa Catarina, sob o nº ${e.oabSociedade}, CNPJ nº ${e.cnpj}, com escritório na ${e.endereco}, por eles representada, a quem confere os poderes da cláusula <i>ad judicia et extra</i>, para exercê-los no foro em geral e perante quaisquer órgãos da administração pública direta e indireta, em especial o INSS, outorgando-lhes ainda <strong>PODERES ESPECIAIS</strong>, na forma do art. 105 do Código de Processo Civil, para receber citação, confessar, reconhecer a procedência do pedido, acordar e transigir, desistir, renunciar ao direito sobre o qual se funda a ação, receber e dar quitação, levantar valores por alvará ou requisição de pagamento, firmar compromisso e assinar declaração de hipossuficiência econômica, prestar caução, passar recibos e substabelecer com ou sem reserva de poderes, e declarar e requerer isenção de imposto de renda. Perante o INSS, especificamente, ficam ainda autorizados a formular, instruir, desistir e acompanhar requerimentos administrativos de qualquer natureza — inclusive pelo Meu INSS, pelo GERID e por demais canais eletrônicos, digitais ou presenciais —, cadastrar e utilizar senha de acesso, solicitar, anuir, cadastrar e revogar procuração eletrônica na plataforma Meu INSS (Portaria Conjunta INSS nº 10/2025, com as alterações da Portaria Conjunta nº 21/2026), indicando os serviços e o prazo de validade, cumprir exigências e juntar documentos (inclusive prontuários e exames médicos), agendar, remarcar e cancelar perícias médicas e avaliações sociais, obter cópia integral de processo administrativo, extratos, CNIS, cartas de concessão e memórias de cálculo, interpor recurso administrativo perante a Junta de Recursos da Previdência Social (JRPS) e o Conselho de Recursos do Seguro Social (CRSS), e indicar ou alterar dados bancários exclusivamente para fins de recebimento do benefício requerido.${PODER_BENEFICIO[t.id]?` Para o objeto contratado, ficam os procuradores expressamente autorizados a requerer, em nome do(a) outorgante, perante o INSS e em juízo, ${PODER_BENEFICIO[t.id]}, e a praticar todos os atos necessários à sua concessão.`:""}</p>
   <p><span class="cl">OBJETO DO MANDATO:</span> em conformidade com o contrato de honorários firmado nesta data, o presente mandato é outorgado para o fim específico de ${fim}, podendo os procuradores praticar todos os demais atos necessários ao bom e fiel desempenho do presente mandato.</p>
   ${pobreza}
   <div class="fecho"><p class="data">${esc(d.cidade&&d.cidade.includes("/")?d.cidade:"Tubarão/SC")}, ${extenso(d.data)}.</p>
