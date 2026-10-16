@@ -127,7 +127,7 @@
 
 <div class="panel">
   <h1>Gerador de Contratos &amp; Procurações</h1>
-  <div class="sub">Rufino &amp; Della Giustina Advocacia · valores conforme o Hub de Propostas de Honorários · os dados ficam somente neste computador · <b>v4.11.4 (14/10/2026)</b> — se esta versão não aparecer, aperte Ctrl+F5</div>
+  <div class="sub">Rufino &amp; Della Giustina Advocacia · valores conforme o Hub de Propostas de Honorários · os dados ficam somente neste computador · <b>v4.11.5 (16/10/2026)</b> — se esta versão não aparecer, aperte Ctrl+F5</div>
 
   <div class="box">
     <div class="bt">1 · Tipo de contratação</div>
@@ -757,6 +757,9 @@ function parseQuadro(){
       // ignora números rotulados como NIT/PIS/NB etc. (documentos do INSS têm vários números de 11 dígitos)
       const antes=txt.slice(Math.max(0,m.index-18),m.index);
       if(/NIT|PIS|PASEP|NB|CNIS|CTPS|BENEF|MATR[IÍ]C|C[OÓ]DIGO/i.test(antes))continue;
+      // v4.11.5: não tira CPF de dentro de um número maior (telefone 55+DDD+9 dígitos) nem de número rotulado como telefone
+      if(m.index>0&&/\d/.test(txt[m.index-1]))continue;
+      if(/(TELEFONE|FONE|CELULAR|CEL|WHATS\w*|ZAP|CONTATO)\W{0,4}$/i.test(antes))continue;
       if(!primeiro)primeiro=d;
       if(cpfValido(d)){valido=d;break;}
     }
@@ -772,7 +775,7 @@ function parseQuadro(){
       if(masc)avisos.push("o CPF aparece MASCARADO no texto ("+masc+") — este documento não serve como fonte do CPF; pegue o número completo no RG/CNH do cliente ou no Projuris");
     }
   }
-  let txtSem=txt.replace(/\d{3}\.?\d{3}\.?\d{3}[-.]?\d{2}(?!\d)/g,"");
+  let txtSem=txt.replace(/\d{3}\.?\d{3}\.?\d{3}[-.]?\d{2}(?!\d)/g,(s,i,t)=>i>0&&/\d/.test(t[i-1])?s:"");
 
   // 3) CEP (8 dígitos)
   if(!found.has("cep")){
